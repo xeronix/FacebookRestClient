@@ -19,8 +19,12 @@ public class RestFBClientImpl implements RestFBClient {
 	private static final String FB_PHOTOS_END_POINT = "/photos";
 	
     private static final String PARAMETER_KEY_FIELDS = "fields";
+    
     private static final String PARAMETER_VALUE_TYPE = "type";
-    private static final String PARMATER_VALUE_IMAGES ="images";
+    private static final String PARAMATER_VALUE_IMAGES ="images";
+    private static final String PARAMATER_VALUE_NAME ="name";
+    private static final String PARAMATER_VALUE_GENDER ="gender";
+
     private static final String ALBUM_TYPE_PROFILE = "profile";
     
 	private FacebookClient facebookClient;
@@ -30,7 +34,8 @@ public class RestFBClientImpl implements RestFBClient {
 	}
 	
 	public List<User> getFriendList() {
-		Connection<User> friends = facebookClient.fetchConnection(FB_ME_FRIENDS_END_POINT, User.class);
+		Connection<User> friends = facebookClient.fetchConnection(FB_ME_FRIENDS_END_POINT, User.class,
+				Parameter.with(PARAMETER_KEY_FIELDS, PARAMATER_VALUE_NAME + "," + PARAMATER_VALUE_GENDER));
 		List<User> friendList = friends.getData();
 		
 		return friendList;
@@ -53,7 +58,7 @@ public class RestFBClientImpl implements RestFBClient {
 		String fbPhotoRestEndPointPrefix = profilePictureAlbumId + FB_PHOTOS_END_POINT;
 		
 		// Get all photos of the photo album
-		Connection<Photo> photos = facebookClient.fetchConnection(fbPhotoRestEndPointPrefix, Photo.class, Parameter.with(PARAMETER_KEY_FIELDS, PARMATER_VALUE_IMAGES));
+		Connection<Photo> photos = facebookClient.fetchConnection(fbPhotoRestEndPointPrefix, Photo.class, Parameter.with(PARAMETER_KEY_FIELDS, PARAMATER_VALUE_IMAGES));
 		List<Photo> photoList = photos.getData();
 		List<String> photosUrl = new ArrayList<String>(photoList.size());
 				

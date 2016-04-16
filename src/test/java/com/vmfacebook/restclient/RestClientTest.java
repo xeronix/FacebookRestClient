@@ -19,7 +19,7 @@ public class RestClientTest extends TestCase {
 		List<User> friendList = restClient.getFriendList();
 		
 		for (User user : friendList) {
-			System.out.println(user.getId() + ":" + user.getName());
+			System.out.println(user.getId() + ":" + user.getName() + ":" + user.getGender());
 			List<String> urls = restClient.getProfilePhotosUrl(user);
 			for (String url : urls ) {
 				System.out.println(url);
